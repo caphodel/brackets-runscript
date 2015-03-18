@@ -12,8 +12,10 @@ define(function (require, exports, module) {
         DocumentManager = brackets.getModule("document/DocumentManager"),
         EditorManager = brackets.getModule("editor/EditorManager");
 
-    var RUN_SCRIPT_NAME   = "Run Script as JS";
-    var RUN_SCRIPT_COMMAND_ID  = "runscript.runjs";
+    var RUN_SCRIPT_NAME   = "Run Script as JS",
+        RUN_SCRIPT_COMMAND_ID  = "runscript.runjs",
+        RUN_SCRIPT_PYTHON_NAME  = "Run Script as Python",
+        RUN_SCRIPT_PYTHON_COMMAND_ID  = "runscript.runpython";
 
     function runjs() {
         var editor = EditorManager.getCurrentFullEditor();
@@ -24,9 +26,27 @@ define(function (require, exports, module) {
         console.log(eval(selectedText));
     }
 
+    function runpython() {
+        var editor = EditorManager.getCurrentFullEditor();
+        var selectedText = editor.getSelectedText();
+        if (selectedText === '') {
+            selectedText = DocumentManager.getCurrentDocument().getText();
+        }
+        var Python = require("python-runner");
+
+        Python.exec(
+            selectedText
+        )
+        .then(function(data){
+            console.log(data);
+        });
+    }
+
     CommandManager.register(RUN_SCRIPT_NAME, RUN_SCRIPT_COMMAND_ID, runjs);
+    CommandManager.register(RUN_SCRIPT_PYTHON_NAME, RUN_SCRIPT_PYTHON_COMMAND_ID, runpython);
 
     Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuDivider();
     Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuItem(RUN_SCRIPT_COMMAND_ID);
+    Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuItem(RUN_SCRIPT_PYTHON_COMMAND_ID);
 
 });
