@@ -1,0 +1,12 @@
+{
+    "name": "deddy.runscript",
+    "title": "Run Script",
+    "description": "Use it to run a selected/all text from opened document as JS inside brackets without opening developer tools. Usefull if you developing a brackets extension or just to try/test your script inside brackets.",
+    "homepage": "https://github.com/caphodel/brackets-runscript",
+    "version": "0.1.0",
+    "author": "Deddy Lasmono Putro <caphodel@gmail.com>",
+    "license": "MIT",
+    "engines": {
+        "brackets": ">=0.20.0"
+    }
+}
