@@ -6,9 +6,9 @@ Usefull if you developing a brackets extension or just to try/test your script i
 
 #Usage
 
-Just select the text that you want to run -> right click -> Run Script.
+Just select the text that you want to run -> right click -> Run Script as JS.
 or
-Right click -> Run Script, if you want to run all text in opened document
+Right click -> Run Script as JS, if you want to run all text in opened document
 
 #Todo
 

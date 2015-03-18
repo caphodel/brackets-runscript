@@ -12,7 +12,7 @@ define(function (require, exports, module) {
         DocumentManager = brackets.getModule("document/DocumentManager"),
         EditorManager = brackets.getModule("editor/EditorManager");
 
-    var RUN_SCRIPT_NAME   = "Run Script";
+    var RUN_SCRIPT_NAME   = "Run Script as JS";
     var RUN_SCRIPT_COMMAND_ID  = "runscript.runjs";
 
     function runjs() {
