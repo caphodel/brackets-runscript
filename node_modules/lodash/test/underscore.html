@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Underscore Test Suite</title>
+		<link rel="stylesheet" href="../node_modules/qunitjs/qunit/qunit.css">
+		<style>
+			iframe {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture">
+			<div id="map-test">
+				<div id="id1"></div>
+				<div id="id2"></div>
+			</div>
+			<img id="chart_image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+		</div>
+		<script>
+			// avoid reporting tests to Sauce Labs when script errors occur
+			if (location.port == '9001') {
+				window.onerror = function(message) {
+					if (window.QUnit) {
+						QUnit.config.done.length = 0;
+					}
+					global_test_results = { 'message': message };
+				};
+			}
+		</script>
+		<script src="../node_modules/qunitjs/qunit/qunit.js"></script>
+		<script src="../node_modules/qunit-extras/qunit-extras.js"></script>
+		<script src="../node_modules/jquery/dist/jquery.js"></script>
+		<script src="../node_modules/platform/platform.js"></script>
+		<script src="./asset/test-ui.js"></script>
+		<script>
+			QUnit.config.asyncRetries = 10;
+			QUnit.config.hidepassed = true;
+
+			// excuse tests we intentionally fail or those with problems
+			QUnit.config.excused = {
+				'Arrays': {
+					'drop': [
+						'alias for rest'
+					],
+					'first': [
+						'can pass an index to first',
+						'[1,2]',
+						'0'
+					],
+					'flatten': [
+						'Flattens empty arrays',
+						'can flatten nested arrays',
+						'can shallowly flatten nested arrays',
+						'works on an arguments object',
+						'can shallowly flatten arrays containing only other arrays'
+					],
+					'initial': [
+						'initial can take an index',
+						'initial can take a large index',
+						'initial works on arguments object'
+					],
+					'intersection': [
+						'can perform an OO-style intersection',
+						'returns an empty array when passed null as first argument',
+						'returns an empty array when passed null as argument beyond the first'
+					],
+					'last': [
+						'can pass an index to last',
+						'0'
+					],
+					'lastIndexOf': [
+						'[0,-1,-1]'
+					],
+					'rest': [
+						'working rest(0)',
+						'rest can take an index',
+						'works on arguments object'
+					],
+					'take': [
+						'alias for first'
+					]
+				},
+				'Chaining': {
+					'pop': true,
+					'shift': true,
+					'splice': true,
+					'reverse/concat/unshift/pop/map': [
+						'can chain together array functions.'
+					]
+				},
+				'Collections': {
+					'filter': [
+						'OO-filter'
+					],
+					'invoke': [
+						'handles null & undefined'
+					],
+					'map': [
+						'OO-style doubled numbers'
+					],
+					'Resistant to collection length and properties changing while iterating': [
+						'Died on test #50'
+					]
+				},
+				'Functions': {
+					'bind': [
+						'Died on test #2'
+					],
+					'bindAll': [
+						'throws an error for bindAll with no functions named'
+					],
+					'memoize': [
+						'{"bar":"BAR","foo":"FOO"}',
+						'Died on test #8'
+					],
+					'throttle repeatedly with results': true,
+					'more throttle does not trigger leading call when leading is set to false': true,
+					'throttle does not trigger trailing call when trailing is set to false': true,
+					'debounce asap': true
+				},
+				'Objects': {
+					'#1929 Typed Array constructors are functions': true,
+					'allKeys': true,
+					'extendOwn': true,
+					'mapObject': true,
+					'matcher': true,
+					'matcher ': true,
+					'extend': [
+						'extend copies all properties from source'
+					],
+					'isFinite': [
+						'Numeric strings are numbers',
+						'Number instances can be finite'
+					],
+					'isMatch': [
+						'inherited and own properties are checked on the test object',
+						'doesnt falsey match constructor on undefined/null'
+					],
+					'keys': [
+						'is not fooled by sparse arrays; see issue #95',
+						'[]'
+					],
+					'matches': [
+						'inherited and own properties are checked on the test object',
+						'doesnt fasley match constructor on undefined/null'
+					]
+				},
+				'Utility': {
+					'_.templateSettings.variable': [
+						'"x"'
+					],
+					'times': [
+						'works as a wrapper'
+					]
+				}
+			};
+
+			// only excuse in Sauce Labs (buggy Safari and timers)
+			if (!ui.isSauceLabs) {
+				delete QUnit.config.excused.Functions['throttle repeatedly with results'];
+				delete QUnit.config.excused.Functions['more throttle does not trigger leading call when leading is set to false'];
+				delete QUnit.config.excused.Functions['throttle does not trigger trailing call when trailing is set to false'];
+				delete QUnit.config.excused.Functions['debounce asap'];
+			}
+			// load test scripts
+			document.write(ui.urlParams.loader != 'none'
+				? '<script data-dojo-config="async:1" src="' + ui.loaderPath + '"><\/script>'
+				: ([
+					'<script src="' + ui.buildPath + '"><\/script>',
+					'<script src="../vendor/underscore/test/collections.js"><\/script>',
+					'<script src="../vendor/underscore/test/arrays.js"><\/script>',
+					'<script src="../vendor/underscore/test/functions.js"><\/script>',
+					'<script src="../vendor/underscore/test/objects.js"><\/script>',
+					'<script src="../vendor/underscore/test/utility.js"><\/script>',
+					'<script src="../vendor/underscore/test/chaining.js"><\/script>'
+				  ].join('\n'))
+			);
+		</script>
+		<script>
+			(function() {
+				if (window.curl) {
+					curl.config({ 'apiName': 'require' });
+				}
+				if (!window.require) {
+					return;
+				}
+				var reBasename = /[\w.-]+$/,
+				    basePath = ('//' + location.host + location.pathname.replace(reBasename, '')).replace(/\btest\/$/, ''),
+				    modulePath = ui.buildPath.replace(/\.js$/, ''),
+				    locationPath = modulePath.replace(reBasename, '').replace(/^\/|\/$/g, ''),
+				    moduleId = /\bunderscore\b/i.test(ui.buildPath) ? 'underscore' : 'lodash',
+				    moduleMain = modulePath.match(reBasename)[0],
+				    uid = +new Date;
+
+				function getConfig() {
+					var result = {
+						'baseUrl': './',
+						'urlArgs': 't=' + uid++,
+						'waitSeconds': 0,
+						'paths': {},
+						'packages': [{
+							'name': 'test',
+							'location': '../vendor/underscore/test',
+							'config': {
+								// work around no global being exported
+								'exports': 'QUnit',
+								'loader': 'curl/loader/legacy'
+							}
+						}]
+					};
+
+					if (ui.isModularize) {
+						result.packages.push({
+							'name': moduleId,
+							'location': locationPath,
+							'main': moduleMain
+						});
+					} else {
+						result.paths[moduleId] = modulePath;
+					}
+					return result;
+				}
+
+				QUnit.config.autostart = false;
+
+				require(getConfig(), [moduleId], function(lodash) {
+					if (ui.isModularize) {
+						window._ = lodash;
+					}
+					require(getConfig(), [
+						'test/collections',
+						'test/arrays',
+						'test/functions',
+						'test/objects',
+						'test/utility',
+						'test/chaining'
+					], function() {
+						QUnit.start();
+					});
+				});
+			}());
+		</script>
+		<script type="text/html" id="template">
+			<%
+			// a comment
+			if (data) { data += 12345; }; %>
+			<li><%= data %></li>
+		</script>
+	</body>
+</html>
