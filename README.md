@@ -6,11 +6,13 @@ Usefull if you developing a brackets extension or just to try/test your script i
 
 especially if you have extension like console plus (https://github.com/sixertoy/brackets-console-plus), so you don't have to open developer console at all.
 
+Now with Python support!!! Just make sure that you have Python installed and python path already set (you can invoke python from cmd/bash/etc).
+
 #Usage
 
-Just select the text that you want to run -> right click -> Run Script as JS.
+Just select the text that you want to run -> right click -> Run Script as JS/Python.
 or
-Right click -> Run Script as JS, if you want to run all text in opened document
+Right click -> Run Script as JS/Python, if you want to run all text in opened document
 
 #Todo
 
