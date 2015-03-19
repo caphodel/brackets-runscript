@@ -13,7 +13,7 @@ define(function (require, exports, module) {
         EditorManager = brackets.getModule("editor/EditorManager"),
         ExtensionUtils = brackets.getModule("utils/ExtensionUtils"),
         NodeDomain = brackets.getModule("utils/NodeDomain"),
-        pythonDomain = new NodeDomain("simple", ExtensionUtils.getModulePath(module, "node/pythonModule"));
+        pythonDomain = new NodeDomain("python", ExtensionUtils.getModulePath(module, "node/pythonModule"));
 
     var RUN_SCRIPT_NAME   = "Run Script as JS",
         RUN_SCRIPT_COMMAND_ID  = "runscript.runjs",
@@ -36,9 +36,7 @@ define(function (require, exports, module) {
             selectedText = DocumentManager.getCurrentDocument().getText();
         }
 
-        pythonDomain.exec('runPythonCode', selectedText).done(function(data){
-            console.log(data);
-        });
+        pythonDomain.exec('runPythonCode', selectedText);
     }
 
     CommandManager.register(RUN_SCRIPT_NAME, RUN_SCRIPT_COMMAND_ID, runjs);

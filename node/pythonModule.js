@@ -9,7 +9,7 @@ maxerr: 50, node: true */
         Python.exec(
             code
         ).then(function(data){
-            return data;
+            console.log(data);
         });
     }
 
