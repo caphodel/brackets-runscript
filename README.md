@@ -14,6 +14,22 @@ Just select the text that you want to run -> right click -> Run Script as JS/Pyt
 or
 Right click -> Run Script as JS/Python/PHP, if you want to run all text in opened document
 
+For running a php script, it must have a php tag (<?php ?>) in your document/selected text, example:
+```php
+<?php 
+    print "Hello word";
+?>
+```
+if you select those script it will be printed "Hello word" on the console.
+
+You can do this too:
+```php
+this text is not from php code, 
+<?php
+    echo "this text is from php";
+?>
+```
+will be printed "this text is not from php code, this text is from php" in javascript console.
 #Todo
 
 - ~~Run script as Python~~
