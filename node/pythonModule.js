@@ -9,7 +9,7 @@ maxerr: 50, node: true */
         Python.exec(
             code
         ).then(function(data){
-            console.log(data);
+            return data;
         });
     }
 
@@ -26,7 +26,9 @@ maxerr: 50, node: true */
             [{name: "code", // parameters
               type: "string",
               description: "Python code"}],
-            []
+            [{name: "data", // return
+              type: "object",
+              description: "Return"}]
         );
     }
     exports.init = init;

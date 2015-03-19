@@ -36,7 +36,9 @@ define(function (require, exports, module) {
             selectedText = DocumentManager.getCurrentDocument().getText();
         }
 
-        pythonDomain.exec('runPythonCode', selectedText);
+        pythonDomain.exec('runPythonCode', selectedText).done(function(data){
+            console.log(data);
+        });
     }
 
     CommandManager.register(RUN_SCRIPT_NAME, RUN_SCRIPT_COMMAND_ID, runjs);
