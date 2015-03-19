@@ -16,5 +16,5 @@ Right click -> Run Script as JS/Python, if you want to run all text in opened do
 
 #Todo
 
-- Run script as Python
+- ~~Run script as Python~~
 - Run script as PHP
