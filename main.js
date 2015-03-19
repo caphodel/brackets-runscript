@@ -10,7 +10,10 @@ define(function (require, exports, module) {
     var CommandManager = brackets.getModule("command/CommandManager"),
         Menus          = brackets.getModule("command/Menus"),
         DocumentManager = brackets.getModule("document/DocumentManager"),
-        EditorManager = brackets.getModule("editor/EditorManager");
+        EditorManager = brackets.getModule("editor/EditorManager"),
+        ExtensionUtils = brackets.getModule("utils/ExtensionUtils"),
+        NodeDomain = brackets.getModule("utils/NodeDomain"),
+        pythonDomain = new NodeDomain("simple", ExtensionUtils.getModulePath(module, "node/SimpleDomain"));
 
     var RUN_SCRIPT_NAME   = "Run Script as JS",
         RUN_SCRIPT_COMMAND_ID  = "runscript.runjs",
@@ -32,14 +35,8 @@ define(function (require, exports, module) {
         if (selectedText === '') {
             selectedText = DocumentManager.getCurrentDocument().getText();
         }
-        var Python = require("python-runner");
 
-        Python.exec(
-            selectedText
-        )
-        .then(function(data){
-            console.log(data);
-        });
+        pythonDomain.exec('runPythonCode', selectedText);
     }
 
     CommandManager.register(RUN_SCRIPT_NAME, RUN_SCRIPT_COMMAND_ID, runjs);
