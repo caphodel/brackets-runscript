@@ -1,9 +1,9 @@
 {
     "name": "deddy.runscript",
     "title": "Run Script",
-    "description": "Use it to run a selected/all text from opened document as JS inside brackets without opening developer tools. Usefull if you developing a brackets extension or just to try/test your script inside brackets. Especially if you have extension like console plus (https://github.com/sixertoy/brackets-console-plus), so you don't have to open developer console at all. Now with Python supports (you must have python in your system and already set python path)!!! Please read more info for Python support, etc.",
+    "description": "Use it to run a selected/all text from opened document as JS inside brackets without opening developer tools. Usefull if you developing a brackets extension or just to try/test your script inside brackets. Especially if you have extension like console plus (https://github.com/sixertoy/brackets-console-plus), so you don't have to open developer console at all. Now with Python and PHP supports (you must have Python and PHP in your system and already set Python and PHP path)!!! Please read more info for Python adn PHP support, etc.",
     "homepage": "https://github.com/caphodel/brackets-runscript",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "author": "Deddy Lasmono Putro <caphodel@gmail.com>",
     "license": "MIT",
     "engines": {
