@@ -39,4 +39,4 @@ will be printed "this text is not from php code, this text is from php" in javas
 - Run script as Lua
 
 #Requested Functionality
-Added quick run (press Ctrl-R for running script) request by https://github.com/Hirse issue https://github.com/caphodel/brackets-runscript/issues/1
+Added quick run (press Ctrl-Shift-R for running script) request by https://github.com/Hirse issue https://github.com/caphodel/brackets-runscript/issues/1
