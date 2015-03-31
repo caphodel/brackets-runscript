@@ -37,3 +37,6 @@ will be printed "this text is not from php code, this text is from php" in javas
 - ~~Run script as Ruby~~
 - Run script as Perl
 - Run script as Lua
+
+#Requested Functionality
+Added quick run (press Ctrl-R for running script) request by https://github.com/Hirse issue https://github.com/caphodel/brackets-runscript/issues/1
