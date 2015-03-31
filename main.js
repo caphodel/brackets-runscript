@@ -90,7 +90,7 @@ define(function (require, exports, module) {
 
     function quickRun(){
         var currentDoc = DocumentManager.getCurrentDocument(),
-            langName = currentDoc.getLanguage()._name;
+            langName = currentDoc.language.getName();
         switch (langName) {
             case 'JavaScript':
                 runjs();
