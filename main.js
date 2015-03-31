@@ -12,7 +12,8 @@ define(function (require, exports, module) {
         DocumentManager = brackets.getModule("document/DocumentManager"),
         EditorManager = brackets.getModule("editor/EditorManager"),
         ExtensionUtils = brackets.getModule("utils/ExtensionUtils"),
-        NodeDomain = brackets.getModule("utils/NodeDomain");
+        NodeDomain = brackets.getModule("utils/NodeDomain"),
+        KeyBindingManager = brackets.getModule("command/KeyBindingManager");
 
     var RUN_SCRIPT_NAME   = "Run Script as JS",
         RUN_SCRIPT_COMMAND_ID  = "runscript.runjs",
@@ -21,7 +22,9 @@ define(function (require, exports, module) {
         RUN_SCRIPT_PHP_NAME  = "Run Script as PHP",
         RUN_SCRIPT_PHP_COMMAND_ID  = "runscript.runPHP",
         RUN_SCRIPT_RUBY_NAME  = "Run Script as Ruby",
-        RUN_SCRIPT_RUBY_COMMAND_ID  = "runscript.runRuby";
+        RUN_SCRIPT_RUBY_COMMAND_ID  = "runscript.runRuby",
+        RUN_SCRIPT_QUICKRUN_NAME  = "Quick Run",
+        RUN_SCRIPT_QUICKRUN_COMMAND_ID  = "runscript.quickrun";
 
     function runjs() {
         var editor = EditorManager.getCurrentFullEditor();
@@ -85,15 +88,38 @@ define(function (require, exports, module) {
 
     }
 
+    function quickRun(){
+        var currentDoc = DocumentManager.getCurrentDocument(),
+            langName = currentDoc.getLanguage()._name;
+        switch (langName) {
+            case 'JavaScript':
+                runjs();
+                break;
+            case 'Ruby':
+                runruby();
+                break;
+            case 'PHP':
+                runphp();
+                break;
+            case 'Python':
+                runpython();
+                break;
+        }
+    }
+
     CommandManager.register(RUN_SCRIPT_NAME, RUN_SCRIPT_COMMAND_ID, runjs);
     CommandManager.register(RUN_SCRIPT_PYTHON_NAME, RUN_SCRIPT_PYTHON_COMMAND_ID, runpython);
     CommandManager.register(RUN_SCRIPT_PHP_NAME, RUN_SCRIPT_PHP_COMMAND_ID, runphp);
     CommandManager.register(RUN_SCRIPT_RUBY_NAME, RUN_SCRIPT_RUBY_COMMAND_ID, runruby);
+    CommandManager.register(RUN_SCRIPT_RUBY_NAME, RUN_SCRIPT_RUBY_COMMAND_ID, runruby);
+    CommandManager.register(RUN_SCRIPT_QUICKRUN_NAME, RUN_SCRIPT_QUICKRUN_COMMAND_ID, quickRun);
 
     Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuDivider();
     Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuItem(RUN_SCRIPT_COMMAND_ID);
     Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuItem(RUN_SCRIPT_PYTHON_COMMAND_ID);
     Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuItem(RUN_SCRIPT_PHP_COMMAND_ID);
     Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuItem(RUN_SCRIPT_RUBY_COMMAND_ID);
+
+    KeyBindingManager.addBinding(RUN_SCRIPT_QUICKRUN_COMMAND_ID, 'Ctrl-R');
 
 });
