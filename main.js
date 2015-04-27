@@ -23,6 +23,8 @@ define(function (require, exports, module) {
         RUN_SCRIPT_PHP_COMMAND_ID  = "runscript.runPHP",
         RUN_SCRIPT_RUBY_NAME  = "Run Script as Ruby",
         RUN_SCRIPT_RUBY_COMMAND_ID  = "runscript.runRuby",
+        RUN_SCRIPT_PERL_NAME  = "Run Script as Perl",
+        RUN_SCRIPT_PERL_COMMAND_ID  = "runscript.runPerl",
         RUN_SCRIPT_QUICKRUN_NAME  = "Quick Run",
         RUN_SCRIPT_QUICKRUN_COMMAND_ID  = "runscript.quickrun";
 
@@ -88,9 +90,30 @@ define(function (require, exports, module) {
 
     }
 
+    function runperl() {
+        var perlDomain = new NodeDomain("perl", ExtensionUtils.getModulePath(module, "node/perlModule"));
+        var editor = EditorManager.getCurrentFullEditor();
+        var selectedText = editor.getSelectedText();
+        if (selectedText === '') {
+            selectedText = DocumentManager.getCurrentDocument().getText();
+        }
+
+        var path = ExtensionUtils.getModulePath(module);
+
+        brackets.fs.writeFile(path + 'code.pl', selectedText, "utf8", function(err) {
+            if(err){
+                console.log(err);
+            }
+            else{
+                perlDomain.exec('runPerlCode', path + 'code.pl');
+            }
+        });
+
+    }
+
     function quickRun(){
         var currentDoc = DocumentManager.getCurrentDocument(),
-            langName = currentDoc.getLanguage()._name;
+            langName = currentDoc.language.getName();
         switch (langName) {
             case 'JavaScript':
                 runjs();
@@ -104,6 +127,9 @@ define(function (require, exports, module) {
             case 'Python':
                 runpython();
                 break;
+            case 'Perl':
+                runperl();
+                break;
         }
     }
 
@@ -111,7 +137,7 @@ define(function (require, exports, module) {
     CommandManager.register(RUN_SCRIPT_PYTHON_NAME, RUN_SCRIPT_PYTHON_COMMAND_ID, runpython);
     CommandManager.register(RUN_SCRIPT_PHP_NAME, RUN_SCRIPT_PHP_COMMAND_ID, runphp);
     CommandManager.register(RUN_SCRIPT_RUBY_NAME, RUN_SCRIPT_RUBY_COMMAND_ID, runruby);
-    CommandManager.register(RUN_SCRIPT_RUBY_NAME, RUN_SCRIPT_RUBY_COMMAND_ID, runruby);
+    CommandManager.register(RUN_SCRIPT_PERL_NAME, RUN_SCRIPT_PERL_COMMAND_ID, runperl);
     CommandManager.register(RUN_SCRIPT_QUICKRUN_NAME, RUN_SCRIPT_QUICKRUN_COMMAND_ID, quickRun);
 
     Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuDivider();
@@ -119,7 +145,8 @@ define(function (require, exports, module) {
     Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuItem(RUN_SCRIPT_PYTHON_COMMAND_ID);
     Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuItem(RUN_SCRIPT_PHP_COMMAND_ID);
     Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuItem(RUN_SCRIPT_RUBY_COMMAND_ID);
+    Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU).addMenuItem(RUN_SCRIPT_PERL_COMMAND_ID);
 
-    KeyBindingManager.addBinding(RUN_SCRIPT_QUICKRUN_COMMAND_ID, 'Ctrl-R');
+    KeyBindingManager.addBinding(RUN_SCRIPT_QUICKRUN_COMMAND_ID, 'F9');
 
 });
