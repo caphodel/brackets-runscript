@@ -7,8 +7,8 @@ maxerr: 50, node: true */
     "use strict";
     var exec = require('child_process').exec;
 
-    function runPHPCode(filePath){
-        exec('ruby '+filePath, function (error, stdout, stderr) {
+    function runRubyCode(filePath){
+        exec('ruby "'+filePath+'"', function (error, stdout, stderr) {
             // output is in stdout
             console.log(stdout);
         });
@@ -21,7 +21,7 @@ maxerr: 50, node: true */
         domainManager.registerCommand(
             "ruby", // domain name
             "runRubyCode", // command name
-            runPHPCode, // command handler function
+            runRubyCode, // command handler function
             false, // this command is synchronous in Node
             "Run Ruby code",
             [{name: "filePath", // parameters
