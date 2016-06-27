@@ -8,7 +8,7 @@ maxerr: 50, node: true */
     var exec = require('child_process').exec;
 
     function runPHPCode(filePath){
-        exec('php '+filePath, function (error, stdout, stderr) {
+        exec('php "'+filePath+'"', function (error, stdout, stderr) {
             // output is in stdout
             console.log(stdout);
         });

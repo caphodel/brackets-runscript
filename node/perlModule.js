@@ -8,7 +8,7 @@ maxerr: 50, node: true */
     var exec = require('child_process').exec;
 
     function runPerlCode(filePath){
-        exec('perl '+filePath, function (error, stdout, stderr) {
+        exec('perl "'+filePath+'"', function (error, stdout, stderr) {
             // output is in stdout
             console.log(stdout);
         });
